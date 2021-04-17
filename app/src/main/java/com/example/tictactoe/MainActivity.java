@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         instruction = findViewById(R.id.inst);
+        instruction.setText("O turn");
         restart = findViewById(R.id.restart);
 
         bt0 = findViewById(R.id.btn0);
