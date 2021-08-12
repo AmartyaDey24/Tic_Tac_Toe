@@ -9,12 +9,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public TextView instruction;
+    public TextView instruction,score1,score2;
 
-    public Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, restart;
+    public Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, restart,playAgain;
 
     int PLAYER_O = 0;
     int PLAYER_X = 1;
+
+    int sc1 ;
+    private int sc2 ;
 
     int activePlayer = PLAYER_O;
 
@@ -29,8 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         instruction = findViewById(R.id.inst);
-        instruction.setText("O turn");
+        instruction.setText("Player 1");
+        score1 = (TextView) findViewById(R.id.score1);
+        score2 = (TextView) findViewById(R.id.score2);
+
         restart = findViewById(R.id.restart);
+        playAgain = findViewById(R.id.PlayAgain);
 
         bt0 = findViewById(R.id.btn0);
         bt1 = findViewById(R.id.btn1);
@@ -73,11 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (activePlayer == PLAYER_O) {
             clickedBtn.setText("O");
             activePlayer = PLAYER_X;
-            instruction.setText("X turn");
+            instruction.setText("Player 2");
         } else {
             clickedBtn.setText("X");
             activePlayer = PLAYER_O;
-            instruction.setText("O turn");
+            instruction.setText("Player 1");
         }
 
         checkForWin();
@@ -105,20 +112,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     isGameActive = false;
 
-                    if (filledPos[val0] == PLAYER_O)
-                        instruction.setText("O  is  WINNER!!");
-                    else
-                        instruction.setText("X  is  WINNER!!");
+                    if (filledPos[val0] == PLAYER_O) {
+                        instruction.setText("Player1  is  WINNER!!");
+                        sc1++;
+                        score1.setText(String.valueOf(sc1));
+                    }
+                    else {
+                        instruction.setText("player2  is  WINNER!!");
+                        sc2++;
+                        score2.setText(String.valueOf(sc2));
+                    }
                 }
             }
         }
+
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playAgain();
+            }
+        });
 
 
     }
 
     private void reset() {
         activePlayer = PLAYER_O;
-        instruction.setText("O turn");
+        instruction.setText("Player1");
+        filledPos = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1};
+        bt0.setText("");
+        bt1.setText("");
+        bt2.setText("");
+        bt3.setText("");
+        bt4.setText("");
+        bt5.setText("");
+        bt6.setText("");
+        bt7.setText("");
+        bt8.setText("");
+
+        bt0.setBackground(getDrawable(android.R.color.darker_gray));
+        bt1.setBackground(getDrawable(android.R.color.darker_gray));
+        bt2.setBackground(getDrawable(android.R.color.darker_gray));
+        bt3.setBackground(getDrawable(android.R.color.darker_gray));
+        bt4.setBackground(getDrawable(android.R.color.darker_gray));
+        bt5.setBackground(getDrawable(android.R.color.darker_gray));
+        bt6.setBackground(getDrawable(android.R.color.darker_gray));
+        bt7.setBackground(getDrawable(android.R.color.darker_gray));
+        bt8.setBackground(getDrawable(android.R.color.darker_gray));
+        isGameActive = true;
+        sc1 = 0;
+        sc2 = 0;
+        score1.setText("0");
+        score2.setText("0");
+    }
+    private void playAgain() {
+        activePlayer = PLAYER_O;
+        instruction.setText("Player1");
         filledPos = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1};
         bt0.setText("");
         bt1.setText("");
